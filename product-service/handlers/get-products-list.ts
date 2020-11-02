@@ -1,6 +1,6 @@
 import { APIGatewayProxyHandler } from 'aws-lambda';
 
-import productList from '../mock-data/productList.json';
+import { ProductsService } from '../services/products-service';
 
 export const getProductsList: APIGatewayProxyHandler = async (_event, _context) => {
   const headers = {
@@ -9,11 +9,13 @@ export const getProductsList: APIGatewayProxyHandler = async (_event, _context) 
       "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
   };
 
+  const data = await ProductsService.getProductsList();
+
   try {
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(productList)
+      body: data
     }
   } catch (e) {
     return {
