@@ -9,14 +9,14 @@ export const getProductsById: APIGatewayProxyHandler = async (_event, _context) 
 
     const productById = await ProductsService.getProductById(productId);
 
-    return  {
+    return {
       statusCode: 200,
       body: productById
     };
   } catch (e) {
     return {
       statusCode: 404,
-      body: JSON.stringify(e)
+      body: JSON.stringify({ error: e })
     }
   }
 }
