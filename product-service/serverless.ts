@@ -52,6 +52,9 @@ const serverlessConfiguration: Serverless = {
           }
         }
       ]
+    },
+    fillDatabaseWithInitValues: {
+      handler: 'handlers/pg-pool-lambda.invoke'
     }
   }
 }

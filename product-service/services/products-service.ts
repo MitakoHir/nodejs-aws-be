@@ -1,16 +1,14 @@
-import productList from '../mock-data/productList.json';
+import { DBService } from './db-service';
+import { selectAllProducts, selectProductWithSpecifiedId } from '../consts/product-db-queries';
 
 export class ProductsService {
-  static async getProductsList(): Promise<string> {
-    return new Promise((res) => {
-      res(JSON.stringify(productList));
-    })
+  static async getProductsList(): Promise<any[]> {
+    const body = await DBService.executeDBQuery(selectAllProducts);
+    return body.rows;
   }
 
-  static async getProductById(id: string): Promise<string> {
-    return new Promise((res, rej) => {
-      const product = productList.find(product => product.id === id);
-      product ? res(JSON.stringify(product)) : rej('Product not found');
-    })
+  static async getProductById(id: string): Promise<any[]> {
+    const body = await DBService.executeDBQuery(selectProductWithSpecifiedId(id));
+    return body.rows;
   }
 }
