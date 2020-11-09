@@ -26,11 +26,16 @@ const serverlessConfiguration: Serverless = {
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
+      PG_HOST: 'nodejs-aws-db.cstefe38xxmz.us-east-1.rds.amazonaws.com',
+      PG_PORT: 5432,
+      PG_DATABASE: 'task4_1',
+      PG_USERNAME: 'postgres',
+      PG_PASSWORD: 'CTlvLlfciegwzwwHDWZg'
     },
   },
   functions: {
     getProductsList: {
-      handler: 'handler.getProductsList',
+      handler: 'handlers/get-products-list.getProductsList',
       events: [
         {
           http: {
@@ -39,10 +44,11 @@ const serverlessConfiguration: Serverless = {
             cors: true
           }
         }
-      ]
+      ],
+      role: 'arn:aws:iam::879670539296:role/lambda-rds-exec'
     },
     getProductsById: {
-      handler: 'handler.getProductsById',
+      handler: 'handlers/get-products-by-id.getProductsById',
       events: [
         {
           http: {
@@ -51,7 +57,21 @@ const serverlessConfiguration: Serverless = {
             cors: true
           }
         }
-      ]
+      ],
+      role: 'arn:aws:iam::879670539296:role/lambda-rds-exec'
+    },
+    setProduct: {
+      handler: 'handlers/set-product.setProduct',
+      events: [
+        {
+          http: {
+            method: 'post',
+            path: 'products',
+            cors: true
+          }
+        }
+      ],
+      role: 'arn:aws:iam::879670539296:role/lambda-rds-exec'
     },
     fillDatabaseWithInitValues: {
       handler: 'handlers/pg-pool-lambda.invoke'
