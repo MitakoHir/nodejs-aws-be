@@ -15,7 +15,7 @@ export const getProductsList: APIGatewayProxyHandler = async (_event, _context) 
     return {
       statusCode: 200,
       headers,
-      body: data
+      body: JSON.stringify(data)
     }
   } catch (e) {
     return {
