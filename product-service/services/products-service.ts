@@ -22,8 +22,10 @@ export class ProductsService {
 
   static async setProduct(product: Product) {
     const { title, price, description, count } = product;
+    console.log('setProduct invoked');
     const result = await DBService.executeDBQuery(insertProduct, [title, price, description]);
     const productId = result.rows[0].id;
+    console.log('product created with id', productId);
     if(result && productId) {
       const stock = await DBService.executeDBQuery(insertStock, [productId, count]);
       return stock.rows;

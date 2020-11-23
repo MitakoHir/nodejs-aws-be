@@ -37,6 +37,11 @@ const serverlessConfiguration: Serverless = {
         Effect: 'Allow',
         Action: 's3:*',
         Resource: 'arn:aws:s3:::${env:PRODUCT_BUCKET_NAME}/*'
+      },
+      {
+        Effect: 'Allow',
+        Action: 'sqs:*',
+        Resource: 'arn:aws:sqs:eu-west-1:879670539296:catalogItemsQueue'
       }
     ]
   },
